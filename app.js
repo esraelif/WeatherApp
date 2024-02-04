@@ -36,19 +36,43 @@ async function checkWeather(city) {
         document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
 
         if (data.weather[0].main == "Clouds") {
-            weatherIcon.src = "./images/clouds.png";
+            weatherIcon.src = "../images/clouds.png";
         } else if (data.weather[0].main == "Clear") {
-            weatherIcon.src = "./images/clear.png";
+            weatherIcon.src = "../images/clear.png";
         } else if (data.weather[0].main == "Rain") {
-            weatherIcon.src = "./images/rain.png";
+            weatherIcon.src = "../images/rain.png";
         } else if (data.weather[0].main == "Drizzle") {
-            weatherIcon.src = "./images/drizzle.png";
+            weatherIcon.src = "../images/drizzle.png";
         } else if (data.weather[0].main == "Mist") {
-            weatherIcon.src = "./images/mist.png";
+            weatherIcon.src = "../images/mist.png";
         }
 
         document.querySelector(".weather").style.display = "block";
         document.querySelector(".error").style.display = "none";
         document.querySelector(".details").style.display = "flex";
+
+        // Save data to local storage
+        localStorage.setItem(data.name, Math.round(data.main.temp) + "°C");
+        showSavedData();
     }
 }
+
+function showSavedData() {
+    const savedDataList = document.getElementById("savedDataList");
+    savedDataList.innerHTML = ""; // Clear previous list
+
+    // Get data from local storage
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+
+        // Create list item
+        const listItem = document.createElement("li");
+        listItem.textContent = `${key}: ${value}`;
+
+        // Add to the list
+        savedDataList.appendChild(listItem);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", showSavedData);

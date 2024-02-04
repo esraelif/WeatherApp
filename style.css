@@ -110,3 +110,7 @@ body {
     margin-top: 10px;
     display: none;
 }
+
+.saved-data {
+    display: none;
+}
